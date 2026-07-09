@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ระบบพิมพ์สติ๊กเกอร์ — ว่านเซียง เคี่ยนเฉา (ไทยแลนด์) จำกัด</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sarabun',sans-serif;background:#F0EDE8;min-height:100vh}
+.hd{background:#3E2008;padding:12px 20px;display:flex;align-items:center;gap:12px;border-bottom:2px solid #B8860B}
+.hd img{height:36px;width:36px;object-fit:contain}
+.hd-th{font-size:14px;font-weight:600;color:#fff}
+.hd-en{font-size:9px;color:#C8A97A;letter-spacing:.5px}
+.wrap{max-width:1100px;margin:0 auto;padding:20px}
+.tabs{display:flex;gap:2px;border-bottom:2px solid #ccc}
+.tab{padding:10px 20px;font-size:13px;cursor:pointer;border:1px solid #ccc;border-bottom:none;background:#e8e4df;color:#666;border-radius:4px 4px 0 0;user-select:none}
+.tab.on{background:#fff;color:#3E2008;font-weight:600;border-bottom-color:#fff}
+.pnl{display:none;background:#fff;border:1px solid #ccc;border-top:none;padding:20px;border-radius:0 4px 4px 4px}
+.pnl.on{display:block}
+.drop{border:2px dashed #bbb;border-radius:8px;padding:36px 20px;text-align:center;cursor:pointer;background:#fafaf8;transition:all .15s}
+.drop:hover{border-color:#3E2008;background:#fff8f0}
+.drop input{display:none}
+.drop .ico{font-size:32px}
+.drop strong{font-size:15px;color:#3E2008;display:block;margin-top:8px}
+.drop p{font-size:12px;color:#888;margin-top:4px}
+.arow{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+button{padding:8px 18px;border-radius:4px;font-size:13px;cursor:pointer;border:1px solid #ccc;background:#fff;font-family:'Sarabun',sans-serif;transition:opacity .15s}
+button:hover{opacity:.85}
+.btn-p{background:#3E2008;color:#fff;border-color:#3E2008}
+.btn-k{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.hint{background:#fff8f0;border:1px solid #e8d5b0;border-radius:6px;padding:12px 16px;margin-top:14px;font-size:12px;color:#6b4c2a}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tag{background:#fff;border:1px solid #d4b896;padding:2px 9px;border-radius:3px;font-size:11px;font-family:monospace;color:#5d3a1a}
+.tag.r{background:#5d3a1a;color:#f5deb3;border-color:#5d3a1a}
+.ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.ctrl input,.ctrl select{padding:6px 10px;border:1px solid #ccc;border-radius:4px;font-size:13px;font-family:'Sarabun',sans-serif}
+.ctrl input{width:200px}
+.selrow{display:flex;align-items:center;gap:8px;font-size:13px;color:#555;margin-bottom:10px}
+.cnt{background:#3E2008;color:#f5deb3;padding:2px 9px;border-radius:3px;font-size:11px;display:none}
+.dbg{font-size:11px;color:#555;margin-bottom:10px;padding:8px 12px;background:#fffbf0;border-radius:4px;border:1px solid #e8d5b0;line-height:1.7;word-break:break-all}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#f5f0eb;padding:8px 10px;text-align:left;font-weight:600;font-size:11px;letter-spacing:.5px;color:#666;border-bottom:1px solid #d4b896}
+td{padding:7px 10px;border-bottom:.5px solid #eee;vertical-align:middle}
+tr:hover td{background:#fafaf8}
+.bdg{display:inline-block;padding:2px 9px;border-radius:2px;font-size:11px;font-weight:500;color:#fff}
+.bp{background:#5d3a1a}.bo{background:#1565C0}.bc{background:#555}.bm{background:#777}
+.pctr{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:18px;padding:12px;background:#fafaf8;border-radius:6px;border:1px solid #e8e0d8}
+.pctr select{padding:6px 10px;border:1px solid #ccc;border-radius:4px;font-size:13px;font-family:'Sarabun',sans-serif}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,310px);gap:16px;justify-content:center}
+.stk{width:310px;font-family:'Sarabun',sans-serif;border-radius:3px;overflow:hidden;break-inside:avoid}
+.stk.p{border:2px solid #5d3a1a}.stk.o{border:2px solid #1565C0}
+.sh{height:50px;display:flex;align-items:center;padding:0 10px;gap:8px}
+.stk.p .sh{background:#5d3a1a}.stk.o .sh{background:#1565C0}
+.sh img{height:30px;width:30px;object-fit:contain;flex-shrink:0}
+.sh-th{font-size:10.5px;font-weight:600;color:#fff;line-height:1.2}
+.sh-en{font-size:7.5px;margin-top:1px}
+.stk.p .sh-en{color:#C8A97A}.stk.o .sh-en{color:#90CAF9}
+.rl-p{height:2px;background:#B8860B}.rl-o{height:2px;background:#1976D2}
+.dr{display:flex;height:22px}
+.dr span{flex:1;display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:600}
+.stk.p .dr .d1{background:#F5EEE0;color:#5d3a1a}.stk.p .dr .d2{background:#EDE0CC;color:#3E2008}
+.stk.o .dr .d1{background:#EEF4FF;color:#1565C0}.stk.o .dr .d2{background:#E3EEFF;color:#0D47A1}
+.sdv{height:.5px;background:#D4B896}.stk.o .sdv{background:#90CAF9}
+.sbdy{padding:8px 10px 4px}
+.splbl{font-size:7px;color:#AAA;letter-spacing:1px}
+.spl{font-size:21px;font-weight:700;letter-spacing:1.5px;line-height:1.2;margin:2px 0 6px}
+.stk.p .spl{color:#2C1A06}.stk.o .spl{color:#0D2A5C}
+.sln{height:.5px;background:#E8D5B0;margin-bottom:6px}.stk.o .sln{background:#BBDEFB}
+.sinfo{display:flex;gap:6px}
+.sinfo-left{flex:1;display:grid;grid-template-columns:68px 1fr;row-gap:4px;align-content:start}
+.sl{font-size:7.5px;color:#AAA;align-self:center}
+.sv{font-size:8.5px;font-weight:600}
+.stk.p .sv{color:#2C1A06}.stk.o .sv{color:#0D2A5C}
+.stamp-wrap{width:52px;flex-shrink:0;display:flex;align-items:flex-start;justify-content:center;padding-top:2px}
+.stamp-inner{width:50px;height:50px;position:relative;display:flex;align-items:center;justify-content:center}
+.stamp-inner svg{position:absolute;top:0;left:0}
+.stamp-txt{position:relative;text-align:center;line-height:1.35}
+.stk.p .stamp-txt{color:#5d3a1a}.stk.o .stamp-txt{color:#1565C0}
+.sth{font-size:7px;font-weight:700;display:block}
+.sen{font-size:6px;font-weight:600;display:block}
+.sbar{display:flex;align-items:center;padding:0 10px;height:20px;border-top:.5px solid #D4B896;margin-top:4px}
+.stk.p .sbar{background:#F9F5EE}.stk.o .sbar{background:#F4F8FF;border-top-color:#90CAF9}
+.bnum{font-family:monospace;font-size:8px;color:#888}
+.empty{text-align:center;padding:32px;color:#aaa;font-size:14px;grid-column:1/-1}
+@media print{
+  body{background:#fff}
+  .hd,.tabs,.pctr,.arow,.hint,.ctrl,.selrow,.dbg{display:none!important}
+  .pnl{display:none!important;border:none;padding:0}
+  #pp{display:block!important}
+  .sgrid{grid-template-columns:repeat(3,1fr);gap:8px;padding:4mm}
+  .stk{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="hd">
+  <img id="hdlogo" src="" alt="logo">
+  <div>
+    <div class="hd-th">ระบบพิมพ์สติ๊กเกอร์ยานพาหนะ</div>
+    <div class="hd-en">WANXIANG QIANCHAO (THAILAND) CO., LTD.</div>
+  </div>
+</div>
+<div class="wrap">
+  <div class="tabs">
+    <div class="tab on" id="tab0" onclick="sw(0)">📁 นำเข้าข้อมูล</div>
+    <div class="tab"    id="tab1" onclick="sw(1)">📋 รายชื่อพนักงาน</div>
+    <div class="tab"    id="tab2" onclick="sw(2)">🖨 พิมพ์สติ๊กเกอร์</div>
+  </div>
+
+  <div id="pu" class="pnl on">
+    <div class="drop" id="dropzone">
+      <input type="file" id="fi" accept=".xlsx,.xls,.csv">
+      <div class="ico">📂</div>
+      <strong>คลิกหรือลากไฟล์มาวาง</strong>
+      <p>รองรับ .xlsx .xls .csv จาก Google Sheets</p>
+    </div>
+    <div class="arow">
+      <button class="btn-p" onclick="loadDemo()">ทดสอบข้อมูลตัวอย่าง</button>
+      <button onclick="dlTpl()">⬇ ดาวน์โหลด Template</button>
+    </div>
+    <div class="hint">
+      <strong style="color:#5d3a1a;display:block;margin-bottom:6px">คอลัมน์ที่รองรับ</strong>
+      <div class="tags">
+        <span class="tag r">ชื่อ</span>
+        <span class="tag r">ฝ่าย</span>
+        <span class="tag r">ประเภทรถ</span>
+        <span class="tag r">ทะเบียน</span>
+        <span class="tag r">จังหวัด</span>
+        <span class="tag">กะ</span>
+        <span class="tag">แผนก</span>
+      </div>
+      <p style="margin-top:8px;color:#999">
+        ฝ่าย: <b>"ฝ่ายผลิต"</b> หรือ <b>"ผลิต"</b> | <b>"ฝ่ายสำนักงาน"</b> หรือ <b>"สำนักงาน"</b><br>
+        ประเภทรถ: <b>"รถยนต์"</b> | <b>"รถจักรยานยนต์"</b> หรือ <b>"มอเตอร์ไซค์"</b>
+      </p>
+    </div>
+  </div>
+
+  <div id="pl" class="pnl">
+    <div class="ctrl">
+      <input type="text" id="sq" placeholder="ค้นหาชื่อ / ทะเบียน..." oninput="rT()">
+      <select id="sd" onchange="rT()">
+        <option value="">ทุกฝ่าย</option>
+        <option value="prod">ฝ่ายผลิต</option>
+        <option value="office">ฝ่ายสำนักงาน</option>
+      </select>
+      <select id="sv" onchange="rT()">
+        <option value="">ทุกประเภทรถ</option>
+        <option value="car">รถยนต์</option>
+        <option value="moto">รถจักรยานยนต์ / มอเตอร์ไซค์</option>
+      </select>
+      <button class="btn-p" onclick="sw(2)">พิมพ์ที่เลือก →</button>
+    </div>
+    <div class="selrow">
+      <input type="checkbox" id="sa" onchange="tgA(this)">
+      <label for="sa" style="cursor:pointer">เลือกทั้งหมด</label>
+      <span class="cnt" id="cb"></span>
+    </div>
+    <div id="dbgBar" class="dbg" style="display:none"></div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr>
+          <th style="width:32px"></th>
+          <th>#</th><th>ชื่อ-นามสกุล</th><th>ฝ่าย</th>
+          <th>ประเภทรถ</th><th>ทะเบียน</th><th>จังหวัด</th><th>แผนก / กะ</th>
+        </tr></thead>
+        <tbody id="tb"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="pp" class="pnl">
+    <div class="pctr">
+      <select id="pf" onchange="rS()">
+        <option value="s">เฉพาะที่เลือก</option>
+        <option value="a">ทั้งหมด</option>
+      </select>
+      <button class="btn-k" onclick="window.print()">🖨 พิมพ์สติ๊กเกอร์</button>
+      <span id="sc" style="font-size:13px;color:#888"></span>
+    </div>
+    <div class="sgrid" id="sgg"></div>
+  </div>
+</div>
+
+<script>
+const LG_B64='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';
+const LG='data:image/png;base64,'+LG_B64;
+document.getElementById('hdlogo').src=LG;
+
+const YEAR_TH=new Date().getFullYear()+543;
+const EXP_DATE='31 ธ.ค. '+YEAR_TH;
+
+let data=[],sel=new Set();
+
+const DEMO=[
+  {name:'สมชาย ใจดี',       dept:'ฝ่ายผลิต',     vehicle:'รถยนต์',          plate:'กข 1234', province:'กรุงเทพฯ',    shift:'เช้า', unit:'ผลิต A'},
+  {name:'สมหญิง รักงาน',    dept:'ฝ่ายผลิต',     vehicle:'รถจักรยานยนต์',   plate:'กกก 001', province:'กรุงเทพฯ',    shift:'บ่าย', unit:'ผลิต B'},
+  {name:'วิชัย สุขสม',      dept:'ฝ่ายสำนักงาน', vehicle:'รถยนต์',          plate:'ขค 5678', province:'นนทบุรี',     shift:'',     unit:'บัญชี'},
+  {name:'นภา แสงดาว',       dept:'ฝ่ายสำนักงาน', vehicle:'รถจักรยานยนต์',   plate:'ขขข 002', province:'ปทุมธานี',    shift:'',     unit:'HR'},
+];
+
+function isProd(v){const s=(v||'').toLowerCase();return s.includes('ผลิต')||s.includes('product');}
+function isMoto(v){const s=(v||'').toLowerCase();return s.includes('จักรยานยนต์')||s.includes('มอเตอร์')||s.includes('motor')||s.includes('moto');}
+
+function readCol(row,...keys){
+  for(const k of keys){const v=row[k];if(v!==undefined&&v!==null&&v.toString().trim()!=='')return v.toString().trim();}
+  return '';
+}
+function mapRow(r,i){
+  return{
+    id:i,
+    name:    readCol(r,'ชื่อ','ชื่อ-นามสกุล','ชื่อ - นามสกุล','ชื่อพนักงาน','name','Name'),
+    dept:    readCol(r,'ฝ่าย','แผนก','ฝ่ายงาน','department','dept'),
+    vehicle: readCol(r,'ประเภทรถ','ประเภท','vehicle','Vehicle')||'รถยนต์',
+    plate:   readCol(r,'ทะเบียน','เลขทะเบียน','ทะเบียนรถ','plate','Plate','license'),
+    province:readCol(r,'จังหวัด','province','Province'),
+    shift:   readCol(r,'กะ','กะงาน','shift','Shift'),
+    unit:    readCol(r,'แผนก','หน่วยงาน','unit','Unit','section'),
+  };
+}
+
+function sw(n){
+  ['tab0','tab1','tab2'].forEach((id,i)=>document.getElementById(id).classList.toggle('on',i===n));
+  ['pu','pl','pp'].forEach((id,i)=>document.getElementById(id).classList.toggle('on',i===n));
+  if(n===1)rT();if(n===2)rS();
+}
+
+function loadDemo(){
+  data=DEMO.map((d,i)=>({...d,id:i}));
+  sel=new Set(data.map(d=>d.id));
+  document.getElementById('dbgBar').style.display='none';
+  sw(1);rT();upd();
+}
+
+function parseFile(file){
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const wb=XLSX.read(e.target.result,{type:'array'});
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      const rows=XLSX.utils.sheet_to_json(ws,{defval:''});
+      if(!rows.length){alert('ไฟล์ว่างหรืออ่านข้อมูลไม่ได้');return;}
+      const cols=Object.keys(rows[0]);
+      data=rows.map((r,i)=>mapRow(r,i));
+      data=data.map(d=>({...d,unit:d.unit||d.dept}));
+      sel=new Set(data.map(d=>d.id));
+      const depts=[...new Set(data.map(d=>d.dept))].filter(Boolean);
+      const vehicles=[...new Set(data.map(d=>d.vehicle))].filter(Boolean);
+      const dbg=document.getElementById('dbgBar');
+      dbg.style.display='block';
+      dbg.innerHTML='<b>คอลัมน์:</b> '+cols.join(', ')+'<br><b>ค่าฝ่าย:</b> '+depts.join(', ')+'<br><b>ค่าประเภทรถ:</b> '+vehicles.join(', ')+'<br><b>จำนวน:</b> '+data.length+' รายการ';
+      sw(1);rT();upd();
+    }catch(err){console.error(err);alert('ไม่สามารถอ่านไฟล์ได้: '+err.message);}
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function matchDept(d,fd){if(!fd)return true;if(fd==='prod')return isProd(d.dept);if(fd==='office')return !isProd(d.dept);return true;}
+function matchVehicle(d,fv){if(!fv)return true;if(fv==='car')return !isMoto(d.vehicle);if(fv==='moto')return isMoto(d.vehicle);return true;}
+
+function rT(){
+  const q=(document.getElementById('sq').value||'').toLowerCase();
+  const fd=document.getElementById('sd').value;
+  const fv=document.getElementById('sv').value;
+  const rows=data.filter(d=>{
+    const mQ=!q||(d.name.toLowerCase().includes(q)||d.plate.toLowerCase().includes(q));
+    return mQ&&matchDept(d,fd)&&matchVehicle(d,fv);
+  });
+  const tb=document.getElementById('tb');
+  if(!rows.length){
+    tb.innerHTML='<tr><td colspan="8" style="text-align:center;padding:24px;color:#aaa">'+(data.length?'ไม่พบข้อมูลที่กรอง (ทั้งหมด '+data.length+' รายการ)':'ยังไม่มีข้อมูล')+'</td></tr>';
+    return;
+  }
+  tb.innerHTML=rows.map(d=>{
+    const dc=isProd(d.dept)?'bp':'bo';
+    const vc=isMoto(d.vehicle)?'bm':'bc';
+    const col=isProd(d.dept)?'#5d3a1a':'#1565C0';
+    return '<tr>'+
+      '<td><input type="checkbox" '+(sel.has(d.id)?'checked':'')+' onchange="tg('+d.id+',this)"></td>'+
+      '<td style="color:#aaa;font-size:11px">'+(d.id+1)+'</td>'+
+      '<td style="font-weight:600">'+(d.name||'-')+'</td>'+
+      '<td><span class="bdg '+dc+'">'+(d.dept||'-')+'</span></td>'+
+      '<td><span class="bdg '+vc+'">'+(d.vehicle||'-')+'</span></td>'+
+      '<td style="font-weight:700;color:'+col+'">'+(d.plate||'-')+'</td>'+
+      '<td style="color:#888">'+(d.province||'-')+'</td>'+
+      '<td style="font-size:12px">'+(d.unit||d.dept||'-')+(d.shift?' / '+d.shift:'')+'</td>'+
+    '</tr>';
+  }).join('');
+}
+
+function tg(id,cb){if(cb.checked)sel.add(id);else sel.delete(id);upd();}
+function tgA(cb){data.forEach(d=>{if(cb.checked)sel.add(d.id);else sel.delete(d.id);});rT();upd();}
+function upd(){
+  const b=document.getElementById('cb');
+  if(sel.size){b.style.display='inline';b.textContent='เลือก '+sel.size+' คน';}
+  else b.style.display='none';
+}
+
+function mkS(d,i){
+  const p=isProd(d.dept),m=isMoto(d.vehicle);
+  const cls=p?'p':'o',rl=p?'rl-p':'rl-o',sc=p?'#5d3a1a':'#1565C0';
+  const dl=p?'ฝ่ายผลิต \u2014 PRODUCTION':'ฝ่ายสำนักงาน \u2014 OFFICE';
+  const vl=m?'รถจักรยานยนต์ \u2014 MOTORCYCLE':'รถยนต์ \u2014 AUTOMOBILE';
+  const code='WQ-'+(p?'P':'O')+'-'+(m?'MC':'CAR')+'-'+YEAR_TH+'-'+String(i+1).padStart(3,'0');
+  const infoP=
+    '<div class="sl">ชื่อ-นามสกุล</div><div class="sv">'+(d.name||'-')+'</div>'+
+    '<div class="sl">แผนก</div><div class="sv">'+(d.unit||d.dept||'-')+'</div>'+
+    '<div class="sl">กะ / SHIFT</div><div class="sv">'+(d.shift||'-')+'</div>'+
+    '<div class="sl">หมดอายุ</div><div class="sv">'+EXP_DATE+'</div>';
+  const infoO=
+    '<div class="sl">ชื่อ-นามสกุล</div><div class="sv">'+(d.name||'-')+'</div>'+
+    '<div class="sl">แผนก</div><div class="sv">'+(d.unit||d.dept||'-')+'</div>'+
+    '<div class="sl">หมดอายุ</div><div class="sv">'+EXP_DATE+'</div>';
+  return '<div class="stk '+cls+'">'+
+    '<div class="sh"><img src="'+LG+'" alt="">'+
+    '<div><div class="sh-th">ว่านเซียง เคี่ยนเฉา (ไทยแลนด์) จำกัด</div>'+
+    '<div class="sh-en">WANXIANG QIANCHAO (THAILAND) CO., LTD.</div></div></div>'+
+    '<div class="'+rl+'"></div>'+
+    '<div class="dr"><span class="d1">'+dl+'</span><span class="d2">'+vl+'</span></div>'+
+    '<div class="sdv"></div>'+
+    '<div class="sbdy">'+
+      '<div class="splbl">หมายเลขทะเบียน / REGISTRATION NO.</div>'+
+      '<div class="spl">'+(d.plate||'-')+' '+(d.province||'')+'</div>'+
+      '<div class="sln"></div>'+
+      '<div class="sinfo">'+
+        '<div class="sinfo-left">'+(p?infoP:infoO)+'</div>'+
+        '<div class="stamp-wrap"><div class="stamp-inner">'+
+          '<svg width="50" height="50" viewBox="0 0 50 50">'+
+          '<circle cx="25" cy="25" r="23" fill="none" stroke="'+sc+'" stroke-width="1.5" stroke-dasharray="3,2.5"/>'+
+          '</svg>'+
+          '<div class="stamp-txt"><span class="sth">อนุมัติ</span><span class="sen">APPROVED</span></div>'+
+        '</div></div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="sbar"><span class="bnum">'+code+'</span></div>'+
+  '</div>';
+}
+
+function rS(){
+  const mode=document.getElementById('pf').value;
+  const rows=mode==='s'?data.filter(d=>sel.has(d.id)):data;
+  document.getElementById('sc').textContent=rows.length?rows.length+' แผ่น':'ไม่มีข้อมูล';
+  const g=document.getElementById('sgg');
+  if(!rows.length){g.innerHTML='<div class="empty">ไม่มีข้อมูล</div>';return;}
+  g.innerHTML=rows.map((d,i)=>mkS(d,i)).join('');
+}
+
+document.getElementById('fi').addEventListener('change',function(e){if(e.target.files[0])parseFile(e.target.files[0]);});
+const dz=document.getElementById('dropzone');
+dz.addEventListener('click',()=>document.getElementById('fi').click());
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.style.borderColor='#3E2008';});
+dz.addEventListener('dragleave',()=>dz.style.borderColor='');
+dz.addEventListener('drop',e=>{e.preventDefault();dz.style.borderColor='';if(e.dataTransfer.files[0])parseFile(e.dataTransfer.files[0]);});
+
+function dlTpl(){
+  const ws=XLSX.utils.aoa_to_sheet([
+    ['ชื่อ','ฝ่าย','ประเภทรถ','ทะเบียน','จังหวัด','กะ','แผนก'],
+    ['สมชาย ใจดี',    'ฝ่ายผลิต',     'รถยนต์',          'กข 1234','กรุงเทพฯ','เช้า','ผลิต A'],
+    ['สมหญิง รักงาน', 'ฝ่ายผลิต',     'รถจักรยานยนต์',   'กกก 001','กรุงเทพฯ','บ่าย','ผลิต B'],
+    ['วิชัย สุขสม',   'ฝ่ายสำนักงาน', 'รถยนต์',          'ขค 5678','นนทบุรี', '',    'บัญชี'],
+    ['นภา แสงดาว',    'ฝ่ายสำนักงาน', 'รถจักรยานยนต์',   'ขขข 002','ปทุมธานี','',    'HR'],
+  ]);
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'พนักงาน');
+  XLSX.writeFile(wb,'template_wanxiang.xlsx');
+}
+</script>
+</body>
+</html>
