@@ -49,109 +49,102 @@ tr:hover td{background:#fafaf8}
 .pctr select{padding:6px 10px;border:1px solid #ccc;border-radius:4px;font-size:13px;font-family:'Sarabun',sans-serif}
 .sgrid{display:grid;grid-template-columns:repeat(auto-fill,320px);gap:20px;justify-content:center}
 
-/* ══════════════════════════════════════
-   STICKER — สีเหมาะกระดาษสะท้อนแสง
-   ฝ่ายผลิต   : ดำ + ทอง
-   ฝ่ายสำนักงาน: น้ำเงินเข้ม #0A2D6E
-   ══════════════════════════════════════ */
-.stk{
-  width:320px;
-  font-family:'Sarabun',sans-serif;
-  border-radius:4px;
-  overflow:hidden;
-  break-inside:avoid;
-  background:#fff;
-}
-/* กรอบดำหนา ชัดบนสะท้อนแสง */
-.stk.p{ border:3px solid #000; }
-.stk.o{ border:3px solid #0A2D6E; }
+/* ══ STICKER ══ */
+.stk{width:320px;font-family:'Sarabun',sans-serif;border-radius:4px;overflow:hidden;break-inside:avoid;background:#fff}
+.stk.p{border:3px solid #000}
+.stk.o{border:3px solid #0A2D6E}
 
-/* ── Header ── */
+/* Header */
 .sh{height:54px;display:flex;align-items:center;padding:0 12px;gap:10px}
-/* ผลิต = ดำ */
 .stk.p .sh{background:#000}
-/* สำนักงาน = น้ำเงินเข้ม */
 .stk.o .sh{background:#0A2D6E}
 .sh img{height:32px;width:32px;object-fit:contain;flex-shrink:0}
 .sh-th{font-size:11px;font-weight:700;color:#fff;line-height:1.25;letter-spacing:.3px}
-/* ผลิต: ตัวอักษรรอง = ทอง */
 .stk.p .sh-en{font-size:7.5px;color:#B8860B;margin-top:2px;letter-spacing:.5px;font-weight:600}
-/* สำนักงาน: ตัวอักษรรอง = ฟ้าอ่อน */
 .stk.o .sh-en{font-size:7.5px;color:#90CAF9;margin-top:2px;letter-spacing:.5px;font-weight:600}
 
-/* ── Rule line ── */
-/* ผลิต = ทอง */
+/* Rule line */
 .rl-p{height:3px;background:#B8860B}
-/* สำนักงาน = ฟ้าสว่าง */
 .rl-o{height:3px;background:#1565C0}
 
-/* ── Dept / Vehicle row ── */
+/* Dept/Vehicle row */
 .dr{display:flex;border-bottom:2px solid #000}
 .stk.o .dr{border-bottom-color:#0A2D6E}
-.dr span{
-  flex:1;display:flex;align-items:center;justify-content:center;
-  font-size:8.5px;font-weight:700;padding:5px 4px;letter-spacing:.4px;
-}
-/* ผลิต: ทองเข้ม + ดำ */
+.dr span{flex:1;display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:700;padding:5px 4px;letter-spacing:.4px}
 .stk.p .dr .d1{background:#B8860B;color:#000}
 .stk.p .dr .d2{background:#8B6508;color:#fff}
-/* สำนักงาน: น้ำเงินเข้ม + ขาว */
 .stk.o .dr .d1{background:#0A2D6E;color:#fff}
 .stk.o .dr .d2{background:#1565C0;color:#fff}
 
-/* ── Body ── */
+/* Body */
 .sbdy{padding:10px 12px 6px;position:relative;background:#fff}
-
 .splbl{font-size:7.5px;font-weight:700;color:#000;letter-spacing:1.5px;text-transform:uppercase}
-
 .spl{font-size:24px;font-weight:800;letter-spacing:2px;line-height:1.1;margin:3px 0 7px;color:#000}
-
-/* เส้นคั่น */
 .stk.p .sln{height:2px;background:#000;margin-bottom:7px}
 .stk.o .sln{height:2px;background:#0A2D6E;margin-bottom:7px}
 
-/* Info grid */
+/* Info */
 .sinfo{display:flex;gap:6px}
 .sinfo-left{flex:1;display:grid;grid-template-columns:72px 1fr;row-gap:5px;align-content:start}
-
-/* Label — ดำ ชัดเจน */
 .sl{font-size:8px;font-weight:700;color:#000;align-self:center;letter-spacing:.3px}
-
-/* Value — ดำเข้ม */
 .sv{font-size:9px;font-weight:700;color:#000;letter-spacing:.2px}
 
-/* Stamp */
+/* Stamp — เขียวเข้ม */
 .stamp-wrap{width:54px;flex-shrink:0;display:flex;align-items:flex-start;justify-content:center;padding-top:2px}
 .stamp-inner{width:52px;height:52px;position:relative;display:flex;align-items:center;justify-content:center}
 .stamp-inner svg{position:absolute;top:0;left:0}
-.stamp-txt{position:relative;text-align:center;line-height:1.35}
-/* stamp = เขียวเข้ม ทั้งสองฝ่าย */
-.stk.p .stamp-txt{color:#1B5E20}
-.stk.o .stamp-txt{color:#1B5E20}
+.stamp-txt{position:relative;text-align:center;line-height:1.35;color:#1B5E20}
 .sth{font-size:7.5px;font-weight:800;display:block}
 .sen{font-size:6.5px;font-weight:700;display:block}
 
-/* ── Barcode strip ── */
-.sbar{
-  display:flex;align-items:center;
-  padding:0 12px;height:22px;margin-top:6px;
-}
-/* ผลิต barcode strip = ทองอ่อน */
+/* Barcode strip */
 .stk.p .sbar{background:#FFF8E1;border-top:2px solid #B8860B}
-/* สำนักงาน barcode strip = น้ำเงินอ่อน */
 .stk.o .sbar{background:#E8F0FE;border-top:2px solid #0A2D6E}
-
-.bnum{font-family:monospace;font-size:8px;font-weight:700;color:#000;letter-spacing:.5px}
+.sbar{display:flex;align-items:center;padding:0 12px;height:22px;margin-top:6px}
+.bnum{font-family:monospace;font-size:8px;font-weight:700;color:#000;letter-spacing:.5px;margin-left:auto}
 
 .empty{text-align:center;padding:32px;color:#aaa;font-size:14px;grid-column:1/-1}
 
+/* ══ PRINT: A4 Landscape 9 แผ่น ══ */
 @media print{
-  body{background:#fff}
+  @page{size:A4 landscape;margin:5mm}
+  body{background:#fff;margin:0;padding:0}
   .hd,.tabs,.pctr,.arow,.hint,.ctrl,.selrow,.dbg{display:none!important}
   .pnl{display:none!important;border:none;padding:0}
-  #pp{display:block!important}
-  .sgrid{grid-template-columns:repeat(3,1fr);gap:8mm;padding:6mm}
-  .stk{width:100%}
+  #pp{display:block!important;padding:0;margin:0}
+  .sgrid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:4mm;
+    padding:0;
+    width:287mm;
+    justify-content:start;
+  }
+  /* สติ๊กเกอร์ขนาดใหญ่ชัด เหมือนหน้าจอ — ย่อเล็กน้อยเท่านั้น */
+  .stk{width:100%;border-width:2.5px}
+  .sh{height:44px!important;padding:0 10px!important;gap:8px!important}
+  .sh img{height:26px!important;width:26px!important}
+  .sh-th{font-size:9.5px!important;line-height:1.2!important}
+  .sh-en{font-size:6.5px!important;margin-top:1px!important}
+  .rl-p,.rl-o{height:2.5px!important}
+  .dr{height:19px!important}
+  .dr span{font-size:7.5px!important;padding:4px 3px!important}
+  .sbdy{padding:8px 10px 4px!important}
+  .splbl{font-size:6.5px!important;letter-spacing:1px!important}
+  .spl{font-size:20px!important;letter-spacing:1.5px!important;margin:2px 0 5px!important}
+  .stk.p .sln,.stk.o .sln{height:1.5px!important;margin-bottom:5px!important}
+  .sinfo{gap:5px!important}
+  .sinfo-left{grid-template-columns:64px 1fr!important;row-gap:4px!important}
+  .sl{font-size:7px!important}
+  .sv{font-size:8px!important}
+  .stamp-wrap{width:46px!important;padding-top:2px!important}
+  .stamp-inner{width:44px!important;height:44px!important}
+  .stamp-inner svg{width:44px!important;height:44px!important}
+  .sth{font-size:6.5px!important}
+  .sen{font-size:5.5px!important}
+  .sbar{height:18px!important;padding:0 10px!important;margin-top:4px!important}
+  .bnum{font-size:7px!important}
+  .bars span{height:11px!important}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
 }
 </style>
@@ -170,7 +163,6 @@ tr:hover td{background:#fafaf8}
     <div class="tab"    id="tab1" onclick="sw(1)">📋 รายชื่อพนักงาน</div>
     <div class="tab"    id="tab2" onclick="sw(2)">🖨 พิมพ์สติ๊กเกอร์</div>
   </div>
-
   <div id="pu" class="pnl on">
     <div class="drop" id="dropzone">
       <input type="file" id="fi" accept=".xlsx,.xls,.csv">
@@ -195,7 +187,6 @@ tr:hover td{background:#fafaf8}
       </p>
     </div>
   </div>
-
   <div id="pl" class="pnl">
     <div class="ctrl">
       <input type="text" id="sq" placeholder="ค้นหาชื่อ / ทะเบียน..." oninput="rT()">
@@ -227,7 +218,6 @@ tr:hover td{background:#fafaf8}
       </table>
     </div>
   </div>
-
   <div id="pp" class="pnl">
     <div class="pctr">
       <select id="pf" onchange="rS()">
@@ -252,23 +242,23 @@ const EXP_DATE='31 ธ.ค. '+YEAR_TH;
 let data=[],sel=new Set();
 
 const DEMO=[
-  {name:'สมชาย ใจดี',       dept:'ฝ่ายผลิต',     vehicle:'รถยนต์',          plate:'กข 1234', province:'กรุงเทพฯ',    shift:'เช้า', unit:'ผลิต A'},
-  {name:'สมหญิง รักงาน',    dept:'ฝ่ายผลิต',     vehicle:'รถจักรยานยนต์',   plate:'กกก 001', province:'กรุงเทพฯ',    shift:'บ่าย', unit:'ผลิต B'},
-  {name:'วิชัย สุขสม',      dept:'ฝ่ายสำนักงาน', vehicle:'รถยนต์',          plate:'ขค 5678', province:'นนทบุรี',     shift:'',     unit:'บัญชี'},
-  {name:'นภา แสงดาว',       dept:'ฝ่ายสำนักงาน', vehicle:'รถจักรยานยนต์',   plate:'ขขข 002', province:'ปทุมธานี',    shift:'',     unit:'HR'},
-  {name:'ประสิทธิ์ มั่นคง', dept:'ฝ่ายผลิต',     vehicle:'รถยนต์',          plate:'คง 3456', province:'สมุทรปราการ', shift:'ดึก',  unit:'ผลิต A'},
-  {name:'มานี ดีใจ',        dept:'ฝ่ายสำนักงาน', vehicle:'รถยนต์',          plate:'งจ 7890', province:'กรุงเทพฯ',    shift:'',     unit:'การตลาด'},
-  {name:'สุรศักดิ์ แกร่ง',  dept:'ฝ่ายผลิต',     vehicle:'รถจักรยานยนต์',   plate:'จจจ 003', province:'กรุงเทพฯ',    shift:'เช้า', unit:'ผลิต C'},
-  {name:'อรุณี สดใส',       dept:'ฝ่ายสำนักงาน', vehicle:'รถจักรยานยนต์',   plate:'ฉช 1111', province:'นนทบุรี',     shift:'',     unit:'IT'},
+  {name:'สมชาย ใจดี',       dept:'ฝ่ายผลิต',     vehicle:'รถยนต์',          plate:'กข 1234', province:'กรุงเทพมหานคร', shift:'เช้า', unit:'ผลิต A'},
+  {name:'สมหญิง รักงาน',    dept:'ฝ่ายผลิต',     vehicle:'รถจักรยานยนต์',   plate:'กกก 001', province:'กรุงเทพมหานคร', shift:'บ่าย', unit:'ผลิต B'},
+  {name:'วิชัย สุขสม',      dept:'ฝ่ายสำนักงาน', vehicle:'รถยนต์',          plate:'ขค 5678', province:'นนทบุรี',        shift:'',     unit:'บัญชี'},
+  {name:'นภา แสงดาว',       dept:'ฝ่ายสำนักงาน', vehicle:'รถจักรยานยนต์',   plate:'ขขข 002', province:'ปทุมธานี',       shift:'',     unit:'HR'},
+  {name:'ประสิทธิ์ มั่นคง', dept:'ฝ่ายผลิต',     vehicle:'รถยนต์',          plate:'คง 3456', province:'สมุทรปราการ',   shift:'ดึก',  unit:'ผลิต A'},
+  {name:'มานี ดีใจ',        dept:'ฝ่ายสำนักงาน', vehicle:'รถยนต์',          plate:'งจ 7890', province:'กรุงเทพมหานคร', shift:'',     unit:'การตลาด'},
+  {name:'สุรศักดิ์ แกร่ง',  dept:'ฝ่ายผลิต',     vehicle:'รถจักรยานยนต์',   plate:'จจจ 003', province:'กรุงเทพมหานคร', shift:'เช้า', unit:'ผลิต C'},
+  {name:'อรุณี สดใส',       dept:'ฝ่ายสำนักงาน', vehicle:'รถจักรยานยนต์',   plate:'ฉช 1111', province:'นนทบุรี',        shift:'',     unit:'IT'},
 ];
 
-function fmtProv(v){
-  const s=(v||'').trim();
-  if(s==='กรุงเทพมหานคร'||s==='กรุงเทพ'||s==='Bangkok'||s.toLowerCase()==='bangkok') return 'กทมฯ';
-  return s;
-}
 function isProd(v){const s=(v||'').toLowerCase();return s.includes('ผลิต')||s.includes('product');}
 function isMoto(v){const s=(v||'').toLowerCase();return s.includes('จักรยานยนต์')||s.includes('มอเตอร์')||s.includes('motor')||s.includes('moto');}
+function fmtProv(v){
+  const s=(v||'').trim();
+  if(s==='กรุงเทพมหานคร'||s==='กรุงเทพ'||s.toLowerCase()==='bangkok') return 'กทมฯ';
+  return s;
+}
 
 function readCol(row,...keys){
   for(const k of keys){const v=row[k];if(v!==undefined&&v!==null&&v.toString().trim()!=='')return v.toString().trim();}
@@ -346,8 +336,8 @@ function rT(){
       '<td style="font-weight:700">'+(d.name||'-')+'</td>'+
       '<td><span class="bdg '+dc+'">'+(d.dept||'-')+'</span></td>'+
       '<td><span class="bdg '+vc+'">'+(d.vehicle||'-')+'</span></td>'+
-      '<td style="font-weight:800;color:'+col+';font-size:14px">'+(d.plate||'-')+'</td>'+
-      '<td style="color:#444">'+(fmtProv(d.province)||'-')+'</td>'+
+      '<td style="font-weight:800;color:'+col+'">'+(d.plate||'-')+'</td>'+
+      '<td style="color:#444">'+fmtProv(d.province)+'</td>'+
       '<td style="font-size:12px">'+(d.unit||d.dept||'-')+(d.shift?' / '+d.shift:'')+'</td>'+
     '</tr>';
   }).join('');
@@ -367,15 +357,12 @@ function bars(color){
 
 function mkS(d,i){
   const p=isProd(d.dept),m=isMoto(d.vehicle);
-  const cls=p?'p':'o';
-  const rl=p?'rl-p':'rl-o';
-  /* stamp color */
-  const sc='#1B5E20';
-  /* barcode color */
-  const bc=p?'#B8860B':'#0A2D6E';
+  const cls=p?'p':'o',rl=p?'rl-p':'rl-o';
+  const bc=p?'#B8860B':'#0A2D6E'; /* barcode color */
   const dl=p?'ฝ่ายผลิต \u2014 PRODUCTION':'ฝ่ายสำนักงาน \u2014 OFFICE';
   const vl=m?'รถจักรยานยนต์ \u2014 MOTORCYCLE':'รถยนต์ \u2014 AUTOMOBILE';
   const code='WQ-'+(p?'P':'O')+'-'+(m?'MC':'CAR')+'-'+YEAR_TH+'-'+String(i+1).padStart(3,'0');
+  const prov=fmtProv(d.province);
 
   const infoP=
     '<div class="sl">ชื่อ-นามสกุล</div><div class="sv">'+(d.name||'-')+'</div>'+
@@ -395,19 +382,19 @@ function mkS(d,i){
     '<div class="dr"><span class="d1">'+dl+'</span><span class="d2">'+vl+'</span></div>'+
     '<div class="sbdy">'+
       '<div class="splbl">หมายเลขทะเบียน / REGISTRATION NO.</div>'+
-      '<div class="spl">'+(d.plate||'-')+' '+fmtProv(d.province)+'</div>'+
-      '<div class="'+(p?'stk.p ':'stk.o ')+'sln" style="height:2px;background:'+(p?'#000':'#0A2D6E')+';margin-bottom:7px"></div>'+
+      '<div class="spl">'+(d.plate||'-')+(prov?' '+prov:'')+'</div>'+
+      '<div class="'+(p?'stk.p':'stk.o')+' sln" style="height:2px;background:'+(p?'#000':'#0A2D6E')+';margin-bottom:7px"></div>'+
       '<div class="sinfo">'+
         '<div class="sinfo-left">'+(p?infoP:infoO)+'</div>'+
         '<div class="stamp-wrap"><div class="stamp-inner">'+
           '<svg width="52" height="52" viewBox="0 0 52 52">'+
-          '<circle cx="26" cy="26" r="24" fill="none" stroke="'+sc+'" stroke-width="2.5" stroke-dasharray="3,2"/>'+
+          '<circle cx="26" cy="26" r="24" fill="none" stroke="#1B5E20" stroke-width="2.5" stroke-dasharray="3,2"/>'+
           '</svg>'+
           '<div class="stamp-txt"><span class="sth">อนุมัติ</span><span class="sen">APPROVED</span></div>'+
         '</div></div>'+
       '</div>'+
     '</div>'+
-    '<div class="sbar">'+bars(bc)+'<span class="bnum" style="margin-left:auto">'+code+'</span></div>'+
+    '<div class="sbar">'+bars(bc)+'<span class="bnum">'+code+'</span></div>'+
   '</div>';
 }
 
@@ -430,10 +417,10 @@ dz.addEventListener('drop',e=>{e.preventDefault();dz.style.borderColor='';if(e.d
 function dlTpl(){
   const ws=XLSX.utils.aoa_to_sheet([
     ['ชื่อ','ฝ่าย','ประเภทรถ','ทะเบียน','จังหวัด','กะ','แผนก'],
-    ['สมชาย ใจดี',    'ฝ่ายผลิต',     'รถยนต์',          'กข 1234','กรุงเทพฯ','เช้า','ผลิต A'],
-    ['สมหญิง รักงาน', 'ฝ่ายผลิต',     'รถจักรยานยนต์',   'กกก 001','กรุงเทพฯ','บ่าย','ผลิต B'],
-    ['วิชัย สุขสม',   'ฝ่ายสำนักงาน', 'รถยนต์',          'ขค 5678','นนทบุรี', '',    'บัญชี'],
-    ['นภา แสงดาว',    'ฝ่ายสำนักงาน', 'รถจักรยานยนต์',   'ขขข 002','ปทุมธานี','',    'HR'],
+    ['สมชาย ใจดี',    'ฝ่ายผลิต',     'รถยนต์',          'กข 1234','กรุงเทพมหานคร','เช้า','ผลิต A'],
+    ['สมหญิง รักงาน', 'ฝ่ายผลิต',     'รถจักรยานยนต์',   'กกก 001','กรุงเทพมหานคร','บ่าย','ผลิต B'],
+    ['วิชัย สุขสม',   'ฝ่ายสำนักงาน', 'รถยนต์',          'ขค 5678','นนทบุรี',      '',    'บัญชี'],
+    ['นภา แสงดาว',    'ฝ่ายสำนักงาน', 'รถจักรยานยนต์',   'ขขข 002','ปทุมธานี',     '',    'HR'],
   ]);
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'พนักงาน');
