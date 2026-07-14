@@ -48,14 +48,15 @@ tr:hover td{background:#fafaf8}
 .pctr{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:18px;padding:12px;background:#f5f5f5;border-radius:6px;border:1px solid #ccc}
 .pctr select{padding:6px 10px;border:1px solid #ccc;border-radius:4px;font-size:13px;font-family:'Sarabun',sans-serif}
 .sgrid{display:grid;grid-template-columns:repeat(auto-fill,320px);gap:20px;justify-content:center}
+.page{display:grid;grid-template-columns:repeat(auto-fill,320px);gap:20px;justify-content:center;margin-bottom:20px}
 
 /* ══ STICKER ══ */
-.stk{width:320px;font-family:'Sarabun',sans-serif;border-radius:4px;overflow:hidden;break-inside:avoid;background:#fff}
+.stk{width:320px;font-family:'Sarabun',sans-serif;border-radius:4px;overflow:hidden;break-inside:avoid;background:#fff;display:flex;flex-direction:column}
 .stk.p{border:3px solid #000}
 .stk.o{border:3px solid #0A2D6E}
 
 /* Header */
-.sh{height:54px;display:flex;align-items:center;padding:0 12px;gap:10px}
+.sh{height:54px;display:flex;align-items:center;padding:0 12px;gap:10px;flex-shrink:0}
 .stk.p .sh{background:#000}
 .stk.o .sh{background:#0A2D6E}
 .sh img{height:32px;width:32px;object-fit:contain;flex-shrink:0}
@@ -68,7 +69,7 @@ tr:hover td{background:#fafaf8}
 .rl-o{height:3px;background:#1565C0}
 
 /* Dept/Vehicle row */
-.dr{display:flex;border-bottom:2px solid #000}
+.dr{display:flex;border-bottom:2px solid #000;flex-shrink:0}
 .stk.o .dr{border-bottom-color:#0A2D6E}
 .dr span{flex:1;display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:700;padding:5px 4px;letter-spacing:.4px}
 .stk.p .dr .d1{background:#B8860B;color:#000}
@@ -77,9 +78,10 @@ tr:hover td{background:#fafaf8}
 .stk.o .dr .d2{background:#1565C0;color:#fff}
 
 /* Body */
-.sbdy{padding:10px 12px 6px;position:relative;background:#fff}
+.sbdy{padding:10px 12px 8px;position:relative;background:#fff;flex:1 1 auto}
 .splbl{font-size:7.5px;font-weight:700;color:#000;letter-spacing:1.5px;text-transform:uppercase}
-.spl{font-size:24px;font-weight:800;letter-spacing:2px;line-height:1.1;margin:3px 0 7px;color:#000}
+.spl{font-size:24px;font-weight:800;letter-spacing:1.5px;line-height:1.15;margin:3px 0 7px;color:#000;white-space:nowrap;overflow:hidden;display:flex;align-items:baseline;gap:6px}
+.sprov{font-size:15px;font-weight:700;letter-spacing:.5px;color:#000;flex-shrink:1;overflow:hidden;text-overflow:ellipsis}
 .stk.p .sln{height:2px;background:#000;margin-bottom:7px}
 .stk.o .sln{height:2px;background:#0A2D6E;margin-bottom:7px}
 
@@ -87,7 +89,8 @@ tr:hover td{background:#fafaf8}
 .sinfo{display:flex;gap:6px}
 .sinfo-left{flex:1;display:grid;grid-template-columns:72px 1fr;row-gap:5px;align-content:start}
 .sl{font-size:8px;font-weight:700;color:#000;align-self:center;letter-spacing:.3px}
-.sv{font-size:9px;font-weight:700;color:#000;letter-spacing:.2px}
+.sv{font-size:9px;font-weight:700;color:#000;letter-spacing:.2px;line-height:1.3}
+.sv-dept{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
 /* Stamp — เขียวเข้ม */
 .stamp-wrap{width:54px;flex-shrink:0;display:flex;align-items:flex-start;justify-content:center;padding-top:2px}
@@ -98,45 +101,55 @@ tr:hover td{background:#fafaf8}
 .sen{font-size:6.5px;font-weight:700;display:block}
 
 /* Barcode strip */
-.stk.p .sbar{background:#FFF8E1;border-top:2px solid #B8860B}
-.stk.o .sbar{background:#E8F0FE;border-top:2px solid #0A2D6E}
-.sbar{display:flex;align-items:center;padding:0 12px;height:22px;margin-top:6px}
+.stk.p .sbar{background:#F5E6C0;border-top:2px solid #B8860B}
+.stk.o .sbar{background:#D6E4F7;border-top:2px solid #0A2D6E}
+.sbar{display:flex;align-items:center;padding:0 12px;height:22px;flex:0 0 22px;margin-top:0}
 .bnum{font-family:monospace;font-size:8px;font-weight:700;color:#000;letter-spacing:.5px;margin-left:auto}
 
 .empty{text-align:center;padding:32px;color:#aaa;font-size:14px;grid-column:1/-1}
 
 /* ══ PRINT: A4 Landscape 9 แผ่น ══ */
 @media print{
-  @page{size:A4 landscape;margin:5mm}
+  @page{size:A4 landscape;margin:3mm}
   body{background:#fff;margin:0;padding:0}
   .hd,.tabs,.pctr,.arow,.hint,.ctrl,.selrow,.dbg{display:none!important}
-  .pnl{display:none!important;border:none;padding:0}
+  .pnl{display:none!important;border:none;padding:0;margin:0}
   #pp{display:block!important;padding:0;margin:0}
+  #sgg{display:block!important}
 
-  .sgrid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:4mm;
-    width:287mm;
-    justify-content:start;
-    align-content:start;
+  /* แต่ละ .page = 1 หน้ากระดาษ บรรจุ 9 ใบ (3x3) */
+  .page{
+    display:grid!important;
+    grid-template-columns:repeat(3,320px)!important;
+    grid-auto-rows:250px!important;
+    gap:2mm!important;
+    padding:0!important;
+    margin:0!important;
+    justify-content:center!important;
+    align-content:start!important;
+    page-break-after:always!important;
+    break-after:page!important;
   }
+  .page:last-child{page-break-after:auto!important;break-after:auto!important}
 
-  /* คงหน้าตาเดิมทั้งหมด แล้วลดทั้งการ์ด */
   .stk{
-    width:100%;
-    transform:scale(.94);
-    transform-origin:top left;
-    margin-bottom:-18px;
-    break-inside:avoid;
+    width:320px!important;
+    height:250px!important;
+    overflow:hidden!important;
+    display:flex!important;
+    flex-direction:column!important;
+    page-break-inside:avoid!important;
+    break-inside:avoid!important;
   }
+  .sbdy{flex:1 1 auto!important;padding:9px 12px 4px!important;overflow:hidden!important}
+  .spl{margin:2px 0 5px!important;white-space:nowrap!important;overflow:hidden!important}
+  .sprov{font-size:14px!important}
+  .stk.p .sln,.stk.o .sln{margin-bottom:5px!important}
+  .sinfo-left{row-gap:3px!important}
+  .sbar{flex:0 0 22px!important;height:22px!important;margin-top:0!important}
 
-  *{
-    -webkit-print-color-adjust:exact!important;
-    print-color-adjust:exact!important;
-  }
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
 }
-
 </style>
 </head>
 <body>
@@ -340,15 +353,10 @@ function upd(){
   else b.style.display='none';
 }
 
-function bars(color){
-  return [2,1,3,1,2,1,3,2,1,3,1,2,3,1,2,1,3,1,2]
-    .map(x=>'<span style="width:'+x+'px;display:inline-block;height:12px;background:'+color+';margin-right:1px"></span>').join('');
-}
 
 function mkS(d,i){
   const p=isProd(d.dept),m=isMoto(d.vehicle);
   const cls=p?'p':'o',rl=p?'rl-p':'rl-o';
-  const bc=p?'#B8860B':'#0A2D6E'; /* barcode color */
   const dl=p?'ฝ่ายผลิต \u2014 PRODUCTION':'ฝ่ายสำนักงาน \u2014 OFFICE';
   const vl=m?'รถจักรยานยนต์ \u2014 MOTORCYCLE':'รถยนต์ \u2014 AUTOMOBILE';
   const code='WQ-'+(p?'P':'O')+'-'+(m?'MC':'CAR')+'-'+YEAR_TH+'-'+String(i+1).padStart(3,'0');
@@ -356,12 +364,12 @@ function mkS(d,i){
 
   const infoP=
     '<div class="sl">ชื่อ-นามสกุล</div><div class="sv">'+(d.name||'-')+'</div>'+
-    '<div class="sl">แผนก</div><div class="sv">'+(d.unit||d.dept||'-')+'</div>'+
+    '<div class="sl">แผนก</div><div class="sv sv-dept">'+(d.unit||d.dept||'-')+'</div>'+
     '<div class="sl">กะ / SHIFT</div><div class="sv">'+(d.shift||'-')+'</div>'+
     '<div class="sl">หมดอายุ / EXP.</div><div class="sv">'+EXP_DATE+'</div>';
   const infoO=
     '<div class="sl">ชื่อ-นามสกุล</div><div class="sv">'+(d.name||'-')+'</div>'+
-    '<div class="sl">แผนก</div><div class="sv">'+(d.unit||d.dept||'-')+'</div>'+
+    '<div class="sl">แผนก</div><div class="sv sv-dept">'+(d.unit||d.dept||'-')+'</div>'+
     '<div class="sl">หมดอายุ / EXP.</div><div class="sv">'+EXP_DATE+'</div>';
 
   return '<div class="stk '+cls+'">'+
@@ -372,7 +380,7 @@ function mkS(d,i){
     '<div class="dr"><span class="d1">'+dl+'</span><span class="d2">'+vl+'</span></div>'+
     '<div class="sbdy">'+
       '<div class="splbl">หมายเลขทะเบียน / REGISTRATION NO.</div>'+
-      '<div class="spl">'+(d.plate||'-')+(prov?' '+prov:'')+'</div>'+
+      '<div class="spl"><span>'+(d.plate||'-')+'</span>'+(prov?'<span class="sprov">'+prov+'</span>':'')+'</div>'+
       '<div class="'+(p?'stk.p':'stk.o')+' sln" style="height:2px;background:'+(p?'#000':'#0A2D6E')+';margin-bottom:7px"></div>'+
       '<div class="sinfo">'+
         '<div class="sinfo-left">'+(p?infoP:infoO)+'</div>'+
@@ -384,7 +392,7 @@ function mkS(d,i){
         '</div></div>'+
       '</div>'+
     '</div>'+
-    '<div class="sbar">'+bars(bc)+'<span class="bnum">'+code+'</span></div>'+
+    '<div class="sbar"><span class="bnum">'+code+'</span></div>'+
   '</div>';
 }
 
@@ -394,7 +402,15 @@ function rS(){
   document.getElementById('sc').textContent=rows.length?rows.length+' แผ่น':'ไม่มีข้อมูล';
   const g=document.getElementById('sgg');
   if(!rows.length){g.innerHTML='<div class="empty">ไม่มีข้อมูล</div>';return;}
-  g.innerHTML=rows.map((d,i)=>mkS(d,i)).join('');
+
+  // แบ่งเป็นหน้า ๆ ละ 9 ใบ (3x3) เพื่อให้พิมพ์ได้ 9 ใบ/หน้าเสมอ
+  let out='';
+  for(let i=0;i<rows.length;i+=9){
+    const chunk=rows.slice(i,i+9);
+    out+='<div class="page">'+chunk.map((d,j)=>mkS(d,i+j)).join('')+'</div>';
+  }
+  g.innerHTML=out;
+  g.className='';
 }
 
 document.getElementById('fi').addEventListener('change',function(e){if(e.target.files[0])parseFile(e.target.files[0]);});
